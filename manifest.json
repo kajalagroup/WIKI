@@ -1,14 +1,14 @@
 {
   "name": "Django WIKI BOOK",
   "short_name": "Django WIKI BOOK",
-  "start_url": "/wiki/",
-  "scope": "/wiki/",
+  "start_url": "/WIKI/",
+  "scope": "/WIKI/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/wiki/favicon.svg",
+      "src": "/WIKI/favicon.svg",
       "sizes": "512x512"
     }
   ]
