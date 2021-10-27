@@ -1,41 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Django WIKI BOOK</title>
-    <link>https://kajalagroup.github.io/wiki/</link>
-    <description>Recent content on Django WIKI BOOK</description>
+    <title>Docs on Django WIKI BOOK</title>
+    <link>https://kajalagroup.github.io/wiki/docs/</link>
+    <description>Recent content in Docs on Django WIKI BOOK</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://kajalagroup.github.io/wiki/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title></title>
-      <link>https://kajalagroup.github.io/wiki/docs/articles/hello/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://kajalagroup.github.io/wiki/docs/articles/hello/</guid>
-      <description>Helllo #  Buttons are styled links that can lead to local page or external link.
-Overview #  {{&amp;lt; button relref=&amp;#34;/&amp;#34; [class=&amp;#34;...&amp;#34;] &amp;gt;}}Get Home{{&amp;lt; /button &amp;gt;}} {{&amp;lt; button href=&amp;#34;https://github.com/alex-shpak/hugo-book&amp;#34; &amp;gt;}}Contribute{{&amp;lt; /button &amp;gt;}}  Get Home  Contribute  Step 1 #  This is content
-Step 2 #  This is content
-Child of step 2 #  </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://kajalagroup.github.io/wiki/posts/post-one/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://kajalagroup.github.io/wiki/posts/post-one/</guid>
-      <description>Post one
-this is for post one</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://kajalagroup.github.io/wiki/posts/post-two/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://kajalagroup.github.io/wiki/posts/post-two/</guid>
-      <description>post two</description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://kajalagroup.github.io/wiki/docs/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
