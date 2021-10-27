@@ -15,3 +15,7 @@ hugo server --minify --theme book
 ## Build
 
 hugo
+
+## Theme:
+
+https://github.com/alex-shpak/hugo-book
