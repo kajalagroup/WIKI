@@ -1,4 +1,4 @@
-baseURL = 'https://kajalagroup.github.io/wiki/'
+baseURL = 'https://kajalagroup.github.io/WIKI/'
 languageCode = 'en-us'
 title = 'Django WIKI BOOK'
 theme = "book"
