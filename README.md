@@ -4,8 +4,8 @@ This repository notes all piece of codes that you struggled to solve.
 
 ## Write your first post:
 
-1. Checkout master branch:
-2. add new markdown file in folder content/posts
+1. Checkout master branch.
+2. Add new markdown file in folder content/posts
 
 This is example how structure of markdown file will look like. You can define title, publish date, description, tags, categories, full content.
 ```
@@ -42,7 +42,7 @@ Added your file static folder:
 ```
 
 3. If you insert image, add your image to /static folder
-4. push to master branch.
+4. Push to master branch.
 5. Waiting for 2 minutes to github Action do its job and visit https://kajalagroup.github.io/WIKI/posts/ your post will be appeared here.
 
 
