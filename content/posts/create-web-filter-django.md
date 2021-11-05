@@ -1,6 +1,6 @@
 +++
 title = "Create web filter"
-description = ""
+description = "Demonstrate how create web filter in Django"
 tags = [
     "Django",
     "frontend"
