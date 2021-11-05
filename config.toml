@@ -1,6 +1,6 @@
 baseURL = 'https://kajalagroup.github.io/WIKI/'
 languageCode = 'en-us'
-title = 'Django WIKI BOOK'
+title = 'Kajala WIKI Book'
 theme = "book"
 
 bookSearchExclude = true

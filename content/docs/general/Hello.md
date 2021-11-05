@@ -20,6 +20,3 @@ This is content
 This is content
 
 
-### Child of step 2
-
-![Example image](/images/test.png)
