@@ -2,13 +2,11 @@
 title = "Custom field in Django admin"
 description = ""
 tags = [
-    "Django",
-    "admin"
+    "Django Admin"
 ]
 date = "2021-11-03"
 categories = [
-    "Development",
-    "Django",
+    "Django"
 ]
 menu = "main"
 +++

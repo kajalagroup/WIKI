@@ -1,4 +1,4 @@
-baseURL = 'https://kajalagroup.github.io/WIKI/'
+baseURL = 'https://kajalagroup.github.io/wiki/'
 languageCode = 'en-us'
 title = 'Kajala WIKI Book'
 theme = "book"

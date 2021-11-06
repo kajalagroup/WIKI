@@ -2,13 +2,11 @@
 title = "Create web filter"
 description = "Demonstrate how create web filter in Django"
 tags = [
-    "Django",
-    "frontend"
+    "Django Frontend"
 ]
 date = "2021-11-02"
 categories = [
-    "Development",
-    "Django",
+    "Django"
 ]
 menu = "main"
 +++
@@ -27,4 +25,4 @@ This is for step 2
 
 Added your file static folder:
 
-![Example image](/WIKI/images/test.png)
+![Example image](/wiki/images/test.png)

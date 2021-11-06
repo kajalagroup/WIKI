@@ -38,12 +38,12 @@ This is for step 2
 
 Added your file static folder:
 
-![Example image](/WIKI/images/test.png)
+![Example image](/wiki/images/test.png)
 ```
 
 3. If you insert image, add your image to /static folder
 4. Push to master branch.
-5. Waiting for 2 minutes to github Action do its job and visit https://kajalagroup.github.io/WIKI/posts/ your post will be appeared here.
+5. Waiting for 2 minutes to github Action do its job and visit https://kajalagroup.github.io/wiki/posts/ your post will be appeared here.
 
 
 
