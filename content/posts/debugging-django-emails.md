@@ -27,4 +27,4 @@ After that in Django's settings.py:
     
 Then you get all sent email contents printed to terminal:
 
-![django-email-debug.png]((/wiki/images/django-email-debug.png)
+![django-email-debug.png](/wiki/images/django-email-debug.png)
