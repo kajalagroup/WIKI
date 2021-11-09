@@ -17,7 +17,7 @@ Run in terminal:
 
         python -m smtpd -n -c DebuggingServer localhost:1025
     
-After that:
+After that in Django's settings.py:
 
         EMAIL_HOST = 'localhost'
         EMAIL_HOST_PASSWORD = ''
@@ -25,6 +25,6 @@ After that:
         EMAIL_PORT = 1025
         EMAIL_USE_SSL = False
     
-Then you get email contents printed to terminal:
+Then you get all sent email contents printed to terminal:
 
 ![django-email-debug.png]((/wiki/images/django-email-debug.png)
