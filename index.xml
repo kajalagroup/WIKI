@@ -2,8 +2,8 @@
 Introduce # Step 1: # This is for step 1
 Step 2: # This is for step 2
 Insert image # Added your file static folder:</description></item><item><title>Debugging Django emails</title><link>https://kajalagroup.github.io/wiki/posts/debugging-django-emails/</link><pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate><guid>https://kajalagroup.github.io/wiki/posts/debugging-django-emails/</guid><description>Run in terminal:
-python -m smtpd -n -c DebuggingServer localhost:1025 After that:
-EMAIL_HOST = 'localhost' EMAIL_HOST_PASSWORD = '' EMAIL_HOST_USER = '' EMAIL_PORT = 1025 EMAIL_USE_SSL = False Then you get email contents printed to terminal:
+python -m smtpd -n -c DebuggingServer localhost:1025 After that in Django&amp;rsquo;s settings.py:
+EMAIL_HOST = 'localhost' EMAIL_HOST_PASSWORD = '' EMAIL_HOST_USER = '' EMAIL_PORT = 1025 EMAIL_USE_SSL = False Then you get all sent email contents printed to terminal:
 ![django-email-debug.png]((/wiki/images/django-email-debug.png)</description></item><item><title/><link>https://kajalagroup.github.io/wiki/docs/general/hello/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://kajalagroup.github.io/wiki/docs/general/hello/</guid><description>Helllo # Buttons are styled links that can lead to local page or external link.
 Overview # {{&amp;lt; button relref=&amp;#34;/&amp;#34; [class=&amp;#34;...&amp;#34;] &amp;gt;}}Get Home{{&amp;lt; /button &amp;gt;}} {{&amp;lt; button href=&amp;#34;https://github.com/alex-shpak/hugo-book&amp;#34; &amp;gt;}}Contribute{{&amp;lt; /button &amp;gt;}} Get Home Contribute Step 1 # This is content
 Step 2 # This is content</description></item></channel></rss>
