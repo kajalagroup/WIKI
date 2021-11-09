@@ -3,5 +3,4 @@ Introduce # Step 1: # This is for step 1
 Step 2: # This is for step 2
 Insert image # Added your file static folder:</description></item><item><title>Debugging Django emails</title><link>https://kajalagroup.github.io/wiki/posts/debugging-django-emails/</link><pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate><guid>https://kajalagroup.github.io/wiki/posts/debugging-django-emails/</guid><description>Run in terminal:
 python -m smtpd -n -c DebuggingServer localhost:1025 After that in Django&amp;rsquo;s settings.py:
-EMAIL_HOST = 'localhost' EMAIL_HOST_PASSWORD = '' EMAIL_HOST_USER = '' EMAIL_PORT = 1025 EMAIL_USE_SSL = False Then you get all sent email contents printed to terminal:
-![django-email-debug.png]((/wiki/images/django-email-debug.png)</description></item></channel></rss>
+EMAIL_HOST = 'localhost' EMAIL_HOST_PASSWORD = '' EMAIL_HOST_USER = '' EMAIL_PORT = 1025 EMAIL_USE_SSL = False Then you get all sent email contents printed to terminal:</description></item></channel></rss>
