@@ -1,0 +1,102 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Export list view in Django admin to Excel file"><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content="Export list view in Django admin to Excel file"><meta property="og:description" content="Export list view in Django admin to Excel file"><meta property="og:type" content="article"><meta property="og:url" content="https://kajalagroup.github.io/wiki/posts/export-list-view-to-excel/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-12-21T00:00:00+00:00"><meta property="article:modified_time" content="2021-12-21T00:00:00+00:00"><title>Export list view in Django admin to Excel file | Kajala WIKI Book</title><link rel=manifest href=/wiki/manifest.json><link rel=icon href=/wiki/favicon.png type=image/x-icon><link rel=stylesheet href=/wiki/book.min.46181bc93375ba932026e753b37c40e6ff8bb16a9ef770c78bcc663e4577b1ba.css integrity="sha256-RhgbyTN1upMgJudTs3xA5v+LsWqe93DHi8xmPkV3sbo=" crossorigin=anonymous><script defer src=/wiki/flexsearch.min.js></script><script defer src=/wiki/en.search.min.5d06ff79afbfb212fbc734552b184eab4ffdca331ce2e9cfa0d2b2441794ff91.js integrity="sha256-XQb/ea+/shL7xzRVKxhOq0/9yjMc4unPoNKyRBeU/5E=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/wiki/><span>Kajala WIKI Book</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=Search aria-label=Search maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li class=book-section-flat><span>General</span><ul><li><a href=https://kajalagroup.github.io/wiki/docs/general/hello/>Hello</a></li></ul></li></ul><ul><li><a href=/wiki/posts/>Posts</a></li></ul></nav><script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/wiki/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>Export list view in Django admin to Excel file</strong>
+<label for=toc-control><img src=/wiki/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents></nav></aside></header><article class=markdown><h1><a href=/wiki/posts/export-list-view-to-excel/>Export list view in Django admin to Excel file</a></h1><h5>December 21, 2021</h5><div><a href=/wiki/categories/development/>Development</a>,
+<a href=/wiki/categories/django/>Django</a></div><div><a href=/wiki/tags/django/>Django</a>,
+<a href=/wiki/tags/backend/>backend</a>,
+<a href=/wiki/tags/export/>Export</a></div><p>The goal is whaterver data is changed in list view by (search, filter, sort ) and you can export result list in same view as you see and you don&rsquo;t need to manually code every column and data in Excel file.</p><p>Firstly, create share mixin to export to Excel file</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=color:#f92672>from</span> jutil.openpyxl_helpers <span style=color:#f92672>import</span> rows_to_workbook
+<span style=color:#f92672>from</span> uuid <span style=color:#f92672>import</span> uuid1
+<span style=color:#f92672>from</span> django.utils.text <span style=color:#f92672>import</span> capfirst
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ExportExcelMixin</span>:
+    <span style=color:#e6db74>&#34;&#34;&#34;
+</span><span style=color:#e6db74>    Export current result list to Excel file with data is same as list view.
+</span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_head</span>(self):
+        map_field_label <span style=color:#f92672>=</span> {}
+        head_row <span style=color:#f92672>=</span> []
+        <span style=color:#66d9ef>for</span> f <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>export_model<span style=color:#f92672>.</span>_meta<span style=color:#f92672>.</span>fields:  <span style=color:#75715e># type : ignore</span>
+            <span style=color:#66d9ef>if</span> hasattr(f, <span style=color:#e6db74>&#34;verbose_name&#34;</span>):
+                map_field_label[f<span style=color:#f92672>.</span>name] <span style=color:#f92672>=</span> f<span style=color:#f92672>.</span>verbose_name
+
+        <span style=color:#66d9ef>for</span> column <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>list_display:  <span style=color:#75715e># type: ignore</span>
+            <span style=color:#66d9ef>if</span> column <span style=color:#f92672>in</span> map_field_label:
+                head_row<span style=color:#f92672>.</span>append(capfirst(map_field_label[column]))
+            <span style=color:#66d9ef>else</span>:
+                method_to_call <span style=color:#f92672>=</span> getattr(self, column)
+                head_row<span style=color:#f92672>.</span>append(capfirst(method_to_call<span style=color:#f92672>.</span>short_description))
+
+        <span style=color:#66d9ef>return</span> head_row
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_data_rows</span>(self, query_set, ):
+        rows <span style=color:#f92672>=</span> []
+        <span style=color:#66d9ef>for</span> model <span style=color:#f92672>in</span> query_set:
+            item <span style=color:#f92672>=</span> []
+            <span style=color:#66d9ef>for</span> column <span style=color:#f92672>in</span> self<span style=color:#f92672>.</span>list_display:  <span style=color:#75715e># type: ignore</span>
+                <span style=color:#66d9ef>if</span> hasattr(model, column):
+                    item<span style=color:#f92672>.</span>append(getattr(model, column))
+                <span style=color:#66d9ef>else</span>:
+                    method_to_call <span style=color:#f92672>=</span> getattr(self, column)
+                    item<span style=color:#f92672>.</span>append(method_to_call(model))
+
+            rows<span style=color:#f92672>.</span>append(item)
+
+        <span style=color:#66d9ef>return</span> rows
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>admin_export_excel</span>(self, request):
+        cl <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>get_changelist_instance(request)  <span style=color:#75715e># type: ignore</span>
+        queryset <span style=color:#f92672>=</span> cl<span style=color:#f92672>.</span>get_queryset(request)
+        keys <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>get_head()
+        rows <span style=color:#f92672>=</span> [keys]
+        rows <span style=color:#f92672>=</span> rows <span style=color:#f92672>+</span> self<span style=color:#f92672>.</span>get_data_rows(queryset)
+        wb <span style=color:#f92672>=</span> rows_to_workbook(rows)
+        download_file_name <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>settings<span style=color:#f92672>.</span>WEBSITE_NAME<span style=color:#e6db74>}</span><span style=color:#e6db74>-</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>export_model<span style=color:#f92672>.</span>_meta<span style=color:#f92672>.</span>verbose_name<span style=color:#e6db74>}</span><span style=color:#e6db74>-</span><span style=color:#e6db74>{</span>now()<span style=color:#f92672>.</span>date()<span style=color:#e6db74>}</span><span style=color:#e6db74>.xlsx&#34;</span>  <span style=color:#75715e># type: ignore</span>
+        real_filename <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;/tmp/</span><span style=color:#e6db74>{</span>uuid1<span style=color:#e6db74>}</span><span style=color:#e6db74>.xlsx&#34;</span>
+        wb<span style=color:#f92672>.</span>save(real_filename)
+        <span style=color:#66d9ef>with</span> open(real_filename, <span style=color:#e6db74>&#34;rb&#34;</span>) <span style=color:#66d9ef>as</span> fh:
+            response <span style=color:#f92672>=</span> HttpResponse(fh<span style=color:#f92672>.</span>read(), content_type<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#34;</span>)
+            response[<span style=color:#e6db74>&#34;Content-Disposition&#34;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;inline; filename=</span><span style=color:#e6db74>{</span>download_file_name<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+            <span style=color:#66d9ef>return</span> response
+
+</code></pre></div><p>Secondly, add that Mixin class to admin class that you want to export list view and define export Model and overide get_url method</p><p>For example:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PostAdmin</span>(admin<span style=color:#f92672>.</span>ModelAdmin, ExportExcelMixin):
+
+    export_model <span style=color:#f92672>=</span> Post
+
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_urls</span>(self):
+        <span style=color:#66d9ef>return</span> [
+            re_path(
+                <span style=color:#e6db74>r</span><span style=color:#e6db74>&#34;^export-excel/$&#34;</span>,
+                self<span style=color:#f92672>.</span>admin_site<span style=color:#f92672>.</span>admin_view(self<span style=color:#f92672>.</span>admin_export_excel),
+                name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;post_export_excel&#34;</span>,
+            ),
+        ] <span style=color:#f92672>+</span> super()<span style=color:#f92672>.</span>get_urls()
+
+</code></pre></div><p>Next, you define web filter called &ldquo;append_get_params&rdquo;, the purpose is append all search params and filter params and sort param to specific give url</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-py data-lang=py><span style=color:#f92672>from</span> urllib.parse <span style=color:#f92672>import</span> urlparse, urlencode, urlunparse
+<span style=color:#f92672>from</span> django.template.defaultfilters <span style=color:#f92672>import</span> register
+
+<span style=color:#a6e22e>@register</span><span style=color:#f92672>.</span>simple_tag(takes_context<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>append_get_params</span>(context, url):
+    <span style=color:#e6db74>&#34;&#34;&#34;
+</span><span style=color:#e6db74>    Append all GET params to passed url
+</span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+    request <span style=color:#f92672>=</span> context<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;request&#39;</span>)
+    parsed_url <span style=color:#f92672>=</span> list(urlparse(url))
+    parsed_url[<span style=color:#ae81ff>4</span>] <span style=color:#f92672>=</span> urlencode(request<span style=color:#f92672>.</span>GET)
+    <span style=color:#66d9ef>return</span> urlunparse(parsed_url)
+</code></pre></div><p>Finally, you need to verride changelist.html for that Admin model to add export link
+For example post model in my app that templated will be located at( or you need to create it)</p><pre><code>my/templates/admin/my/post/change_list.html
+</code></pre><p>Here is the code for that file.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html>{% block object-tools-items %}
+    &lt;<span style=color:#f92672>li</span>&gt;
+        {% url &#39;admin:post_export_excel&#39; as export_url %}
+        &lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% append_get_params export_url %}&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;downloadlink&#34;</span> &gt;
+            {% trans &#34;Export to Excel&#34; %}
+        &lt;/<span style=color:#f92672>a</span>&gt;
+    &lt;/<span style=color:#f92672>li</span>&gt;
+    {% if has_add_permission %}
+    &lt;<span style=color:#f92672>li</span>&gt;
+        &lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;admin:my_post_add&#39; %}&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;addlink&#34;</span>&gt;{% trans &#34;Add&#34; %}&lt;/<span style=color:#f92672>a</span>&gt;
+    &lt;/<span style=color:#f92672>li</span>&gt;
+    {% endif %}
+
+{% endblock %}
+</code></pre></div><p>Combined with custom style, Here is the result</p><p><img src=/wiki/images/export-to-excel.png alt=export-to-excel.png></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents></nav></div></aside></main></body></html>
