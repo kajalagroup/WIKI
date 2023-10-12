@@ -5,7 +5,7 @@ tags = [
     "Django",
     "backend"
 ]
-date = "2023-04-10"
+date = "2023-10-11"
 categories = [
     "Development", 
     "Django",
